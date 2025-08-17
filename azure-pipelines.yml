@@ -5,9 +5,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Maven@3
+
+- task: Maven@4
   inputs:
+
     mavenPomFile: 'pom.xml'
-    goals: 'clean test'
-    options: '-Drp.launch="Azure Pipeline Run $(Build.BuildId)"'
-  displayName: "Run Automation Tests with ReportPortal"
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
